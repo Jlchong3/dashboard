@@ -1,8 +1,17 @@
+body {
+  background: rgb(84,233,243);
+  background: linear-gradient(0deg, rgba(84,233,243,1) 0%, rgba(255,253,153,1) 100%);
+}
 #root {
-  max-width: 1280px;
   margin: 0 auto;
+  height: 100%;
   padding: 2rem;
   text-align: center;
+}
+
+h1 {
+  font-size: 5em;
+  color: #3853e2;
 }
 
 .logo {

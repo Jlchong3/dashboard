@@ -6,25 +6,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Item from '../interface/Item.tsx'
+import InfoWeather from '../interface/InfoWeather.tsx';
 import { useState,useEffect } from 'react';
 
-interface MyProp {
-    itemsIn: Item[]
-}
-
-function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
-) {
-    return { name, calories, fat, carbs, protein };
-}
-
-
-export default function BasicTable(props: MyProp) {
-    let [rows, setRows] = useState<Item[]>([])
+export default function BasicTable(props: InfoWeather) {
+    const [rows, setRows] = useState<Item[]>([])
 
     useEffect( ()=> {
         setRows(props.itemsIn)
@@ -34,8 +20,7 @@ export default function BasicTable(props: MyProp) {
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Hora de inicio</TableCell>
-                        <TableCell align="right">Hora de fin</TableCell>
+                        <TableCell>Hora</TableCell>
                         <TableCell align="right">Precipitación</TableCell>
                         <TableCell align="right">Humedad</TableCell>
                         <TableCell align="right">Nubosidad</TableCell>
@@ -50,7 +35,6 @@ export default function BasicTable(props: MyProp) {
                             <TableCell component="th" scope="row">
                                 {row.dateStart}
                             </TableCell>
-                            <TableCell align="right">{row.dateEnd}</TableCell>
                             <TableCell align="right">{row.precipitation}</TableCell>
                             <TableCell align="right">{row.humidity}</TableCell>
                             <TableCell align="right">{row.clouds}</TableCell>

@@ -1,38 +1,37 @@
- import Paper from '@mui/material/Paper';
- import { LineChart } from '@mui/x-charts/LineChart';
+import Paper from '@mui/material/Paper';
+import { LineChart } from '@mui/x-charts/LineChart';
+import InfoWeather from '../interface/InfoWeather';
 
- const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
- const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
- const xLabels = [
-     'Page A',
-     'Page B',
-     'Page C',
-     'Page D',
-     'Page E',
-     'Page F',
-     'Page G',
- ];
+export default function LineChartWeather(props: InfoWeather) {
+    if (!props.itemsIn || props.itemsIn.length === 0) {
+        return <div>No data available for the selected option.</div>;
+    }
 
- export default function LineChartWeather() {
-     return (
-         <Paper
-             sx={{
-                 p: 2,
-                 display: 'flex',
-                 flexDirection: 'column'
-             }}
-         >
+    const keyMapping: { [key: string]: keyof typeof props.itemsIn[0] } = {
+        "Precipitación": "precipitation",
+        "Humedad": "humidity",
+        "Nubosidad": "clouds",
+    };
 
-             {/* Componente para un gráfico de líneas */}
-             <LineChart
-                 width={400}
-                 height={250}
-                 series={[
-                     { data: pData, label: 'pv' },
-                     { data: uData, label: 'uv' },
-                 ]}
-                 xAxis={[{ scaleType: 'point', data: xLabels }]}
-             />
-         </Paper>
-     );
- }
+    const key = keyMapping[props.option];
+    const xLabels: string[] = props.itemsIn.map((item) => item.dateStart || "Unknown");
+    const yData: number[] = props.itemsIn.map((item) => parseFloat(item[key]));
+
+    return (
+        <Paper
+            sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+            }}
+        >
+            <LineChart
+                height={375}
+                series={[
+                    { data: yData, label: props.option },
+                ]}
+                xAxis={[{ scaleType: 'point', data: xLabels }]}
+            />
+        </Paper>
+    );
+}
